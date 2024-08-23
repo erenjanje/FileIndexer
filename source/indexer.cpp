@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 		 "      <title>" +
 		 title +
 		 " - $DIRNAME$</title>\n"
-		 "      <link rel=\"stylesheet\" href=\"" +
+		 "      <link rel=\"stylesheet\" href=\"/" +
 		 MakePathForward(fs::relative(argv[1], argv[2]) / "style.css") +
 		 "\"/>\n"
 		 "   </head>\n"
