@@ -22,9 +22,10 @@ private:
 	fs::path m_parent;
 	std::string m_index_file_name;
 	fs::path m_directory;
-   fs::path m_base;
+	fs::path m_base;
 	std::vector<fs::path> m_files;
 	std::vector<fs::path> m_directories;
 	std::vector<Index> m_directory_indexers;
 	std::string m_table;
+	uintmax_t m_total_size = 0;
 };

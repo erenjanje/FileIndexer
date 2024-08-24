@@ -64,15 +64,16 @@ void Index::Read() {
 				m_directories.push_back(filepath);
 				m_directory_indexers.push_back(Index(filepath, m_directory, m_index_file_name, m_base));
 				m_directory_indexers.back().Read();
+				m_total_size += m_directory_indexers.back().m_total_size;
 			} else {
 				m_files.push_back(filepath);
+				m_total_size += entry.file_size();
 			}
 		}
 	}
 }
 
 void Index::CreateTable() {
-	std::cout << m_directory.string() << "\n";
 	m_table =
 		 "<table>\n"
 		 "         <tr>\n"
@@ -101,14 +102,16 @@ void Index::CreateTable() {
 	m_table += "            <td>Directory</td>\n";	// Type
 	m_table += "         </tr>\n";
 
-	for (const auto& dir : m_directories) {
+	for (size_t i = 0; i < m_directories.size(); i++) {
+		const auto& dir = m_directories[i];
+		const auto& idxer = m_directory_indexers[i];
 		m_table += "         <tr>\n";
 		m_table += "            <td><a href=\"/" + MakePathForward(fs::relative(dir, m_base).string()) + "\">" +
-					  dir.filename().string() + "/" + "</a></td>\n";  // Name
-		m_table += "            <td><hr/></td>\n";					  // Human Readable Size
-		m_table += "            <td><hr/></td>\n";					  // Last Write Time
-		m_table += "            <td><hr/></td>\n";					  // Bytes Size
-		m_table += "            <td>Directory</td>\n";				  // Type
+					  dir.filename().string() + "/" + "</a></td>\n";										 // Name
+		m_table += "            <td>" + HumanReadableFileSize(idxer.m_total_size) + "</td>\n";	 // Human Readable Size
+		m_table += "            <td><hr/></td>\n";															 // Last Write Time
+		m_table += "            <td>" + std::to_string(idxer.m_total_size) + "</td>\n";			 // Bytes Size
+		m_table += "            <td>Directory</td>\n";														 // Type
 		m_table += "         </tr>\n";
 	}
 
@@ -132,7 +135,6 @@ void Index::CreateTable() {
 		m_table += "         </tr>\n";
 	}
 	m_table += "</table>";
-	std::cout << m_table << "\n\n";
 
 	for (auto& sub_indexer : m_directory_indexers) {
 		sub_indexer.CreateTable();
@@ -145,4 +147,7 @@ void Index::Write(const std::string& tmplate) {
 	ReplaceAll(filled, "$DIRNAME$", fs::relative(m_directory, m_base).string());
 	ReplaceAll(filled, "$DIRTABLE$", m_table);
 	os << filled;
+	for (auto& idxer : m_directory_indexers) {
+		idxer.Write(tmplate);
+	}
 }
