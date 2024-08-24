@@ -59,7 +59,7 @@ void Index::Read() {
 	for (const auto& entry : fs::directory_iterator(m_directory)) {
 		const auto filepath = entry.path();
 		const auto filename = filepath.filename();
-		if ((not filename.string().starts_with(".")) and filename.string() != m_index_file_name) {
+		if (filename.string()[0] != '.' and filename.string() != m_index_file_name) {
 			if (entry.is_directory()) {
 				m_directories.push_back(filepath);
 				m_directory_indexers.push_back(Index(filepath, m_directory, m_index_file_name, m_base));

@@ -85,7 +85,7 @@ DISABLED_WARNINGS := unused-parameter unknown-pragmas
 ERRORS := $(ENABLED_WARNINGS) $(DISABLED_WARNINGS:%=no-%)
 DEFINES := $(if $(DEBUG),DEBUG,RELEASE) _GLIBCXX_HAVE_STACKTRACE
 FLAGS := PIC $(if $(DEBUG),lto) $(if $(and $(DEBUG),$(call NOT,$(IS_WINDOWS))),sanitize=leak sanitize=address)
-STANDARD := c++20
+STANDARD := c++17
 
 # Linker options
 LIBS := m gdi32 comdlg32 comctl32 uuid oleaut32 ole32 dwmapi user32 dbghelp
