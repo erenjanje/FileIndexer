@@ -86,7 +86,7 @@ void Index::CreateTable() {
 
 	m_table += "         <tr>\n";
 	m_table +=
-		 "            <td><a href=\"/" + MakePathForward(fs::relative(m_directory, m_base)) + "\">./</a></td>\n";  // Name
+		 "            <td><a href=\"/" + MakePathForward(fs::relative(m_directory, m_base)) + "\">.</a></td>\n";	 // Name
 	m_table += "            <td><hr/></td>\n";		// Human Readable Size
 	m_table += "            <td><hr/></td>\n";		// Last Write Time
 	m_table += "            <td><hr/></td>\n";		// Bytes Size
@@ -95,7 +95,7 @@ void Index::CreateTable() {
 
 	m_table += "         <tr>\n";
 	m_table +=
-		 "            <td><a href=\"/" + MakePathForward(fs::relative(m_parent, m_base)) + "\">../</a></td>\n";	// Name
+		 "            <td><a href=\"/" + MakePathForward(fs::relative(m_parent, m_base)) + "\">..</a></td>\n";  // Name
 	m_table += "            <td><hr/></td>\n";		// Human Readable Size
 	m_table += "            <td><hr/></td>\n";		// Last Write Time
 	m_table += "            <td><hr/></td>\n";		// Bytes Size
