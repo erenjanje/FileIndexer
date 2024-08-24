@@ -20,7 +20,7 @@ ifeq ($(OS),Windows_NT)
 
 IS_WINDOWS := $(TRUE)
 MKDIR = $(if $1,if not exist $(QUOTE)$1$(QUOTE) mkdir $(QUOTE)$1$(QUOTE))
-REMOVE = $(if $1,del /Q "$(call backslashize,$1)")
+REMOVE = $(if $1,del /Q $1)
 ECHO = $(if $1,echo $1,echo.)
 STATIC_LIB_EXTENSION := .lib
 DYNAMIC_LIB_EXTENSION := .dll
@@ -135,7 +135,7 @@ all: build
 
 clean:
 	@echo RM $(ALL_OBJS)
-	$(foreach o,$(ALL_OBJS),$(call REMOVE,$o))
+	@$(call REMOVE,$(foreach o,$(ALL_OBJS),"$(call backslashize,$o)"))
 .PHONY: clean
 
 DEPEND_FILE = $(patsubst $(SRCDIR)%$(SRC_EXTENSION),$(DEPENDDIR)%$(DEPENDS_EXTENSION),$<)
