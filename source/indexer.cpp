@@ -17,7 +17,7 @@ void PrintHelp(const std::string& program_name) {
 					 "DIRECTORY: Directory to be indexed and where index.html files should be generated.\n"
 					 "BASE: The base directory that should be the base of the links.\n"
 					 "TITLE: Title of the created pages, the name of the directory appended after a dash (-). Default is "
-					 "\"Files\"\n";
+					 "\"Files\".\n";
 }
 
 int main(int argc, char* argv[]) {
