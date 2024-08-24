@@ -11,12 +11,13 @@ namespace fs = std::filesystem;
 void PrintHelp(const std::string& program_name) {
 	std::cout << "Usage: \n"
 				 << "   " << fs::path(program_name).filename().string()
-				 << " [-h/--help] DIRECTORY BASE TITLE\n"
+				 << " [-h/--help] DIRECTORY BASE [TITLE]\n"
 					 "\n"
 					 "-h/--help: Prints this help text.\n"
 					 "DIRECTORY: Directory to be indexed and where index.html files should be generated.\n"
-					 "BASE: The base directory that should be the base of the links\n"
-					 "TITLE: Title of the created pages, the name of the directory appended after a dash (-)\n";
+					 "BASE: The base directory that should be the base of the links.\n"
+					 "TITLE: Title of the created pages, the name of the directory appended after a dash (-). Default is "
+					 "\"Files\"\n";
 }
 
 int main(int argc, char* argv[]) {
