@@ -88,7 +88,7 @@ FLAGS := PIC $(if $(DEBUG),lto) $(if $(and $(DEBUG),$(call NOT,$(IS_WINDOWS))),s
 STANDARD := c++17
 
 # Linker options
-LIBS := m gdi32 comdlg32 comctl32 uuid oleaut32 ole32 dwmapi user32 dbghelp
+LIBS :=
 
 # Make the options suitable for passing to compiler/flagize them
 _DEBUG := $(if $(DEBUG),-g3 -gdwarf-2)
@@ -109,7 +109,7 @@ LIBS_FLAG := $(LIBS:%=-l%)
 FOUND_LIBS_FLAG := $(FOUND_LIBS:%=-l"%")
 _LIBS := $(FOUND_LIBS_FLAG) $(LIBS_FLAG)
 
-CFLAGS := -I"./$(INCDIR)" -O$(OPTIMIZATION_LEVEL) $(_DEFINES) $(_STANDARD) $(_FLAGS) $(_ERRORS) $(_DEBUG) $(STACKTRACE) -static
+CFLAGS := -I"./$(INCDIR)" -O$(OPTIMIZATION_LEVEL) $(_DEFINES) $(_STANDARD) $(_FLAGS) $(_ERRORS) $(_DEBUG) $(STACKTRACE) -static -lstdc++
 LDFLAGS := $(CFLAGS) $(LIB_DIRS) $(_LIBS)
 
 # Processed files
