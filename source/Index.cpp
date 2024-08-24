@@ -117,13 +117,15 @@ void Index::CreateTable() {
 
 	for (const auto& file : m_files) {
 		const auto modification_time = fs::last_write_time(file);
-		const auto modtime_sysclock = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
-			 modification_time - decltype(modification_time)::clock::now() + std::chrono::system_clock::now()
-		);
+		const auto fnow = decltype(modification_time)::clock::now();
+		const auto snow = std::chrono::system_clock::now();
+		const auto modtime_sysclock =
+			 std::chrono::time_point_cast<std::chrono::system_clock::duration>(modification_time - fnow + snow);
 		const auto modtime_timet = std::chrono::system_clock::to_time_t(modtime_sysclock);
+		const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(snow.time_since_epoch()) % 1000;
 		const auto* gmt = std::gmtime(&modtime_timet);
 		auto ss = std::stringstream();
-		ss << std::put_time(gmt, "%F %T");
+		ss << std::put_time(gmt, "%F %T") << '.' << std::setfill('0') << std::setw(3) << ms.count();
 		const auto timestr = ss.str();
 		m_table += "         <tr>\n";
 		m_table += "            <td><a href=\"/" + MakePathForward(fs::relative(file, m_base).string()) + "\">" +
